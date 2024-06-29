@@ -1,28 +1,33 @@
+/* Seleciona os quizzes do html */
 let quizzes = document.querySelectorAll('.quiz');
+
+/* Define o início do contador */
 let startTime = null; 
 
+/* Seleciona as alternativas e coloca a função de checar as respostas */
 for (let quiz of quizzes) {
-  let alternatives = quiz.querySelectorAll('li');
-
-  for (let alternative of alternatives) {
-    alternative.addEventListener('click', checkAnswer);
+  let alternativas = quiz.querySelectorAll('li');
+  for (let alternativa of alternativas) {
+    alternativa.addEventListener('click', checador);
   }
 }
 
-function checkAnswer(event) {
+/* Cria a função de checar as respostas */
+function checador(event) {
   let alternative = event.target;
-  let quiz = alternative.closest('.quiz');
-  let result = quiz.querySelector('.resultado');
-  let answer = quiz.querySelector('.resposta');
+  let quiz = alternativa.closest('.quiz');
+  let resultado = quiz.querySelector('.resultado');
+  let resposta = quiz.querySelector('.resposta');
   quiz.classList.add('inactive');
-  let correct = alternative.classList.contains('correto');
+  let correto = alternativa.classList.contains('correto');
+  alternativa.classList.add('clicked');
+  
+/* Mensagem se a alternativa estiver correta */
+  if (correto) {
+    resultado.style.color = '#000';
+    resultado.textContent = 'Você acertou';
 
-  alternative.classList.add('clicked');
-
-  if (correct) {
-    result.style.color = '#000';
-    result.textContent = 'Você acertou';
-
+    /* Conta o tempo que demorou pra pessoa acertar */
     if (startTime) {
       let endTime = new Date();
       let timeDiff = (endTime - startTime) / 1000;
@@ -35,13 +40,15 @@ function checkAnswer(event) {
       timeDisplay.textContent = `Você levou ${timeDiff.toFixed(2)} segundos para acertar`;
       startTime = null;
     }
-  } else {
-    result.style.color = '#000';
-    result.textContent = 'Você errou';
+  } 
+    /* Mensagem se a resposta estiver errada */
+  else {
+    resultado.style.color = '#000';
+    resultado.textContent = 'Você errou';
   }
+  resposta.style.display = 'initial';}
 
-  answer.style.display = 'initial';}
-
+/* Toca os audios */
 function playAudio(audioId) {
   return function() {
     document.querySelector(audioId).play();
