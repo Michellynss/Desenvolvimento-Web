@@ -4,7 +4,7 @@ let quizzes = document.querySelectorAll('.quiz');
 /* Define o início do contador */
 let startTime = null; 
 
-/* Seleciona as alternativas e coloca a função de checar as respostas */
+/* Seleciona as alternativas ea funçã o de checar as respostas */
 for (let quiz of quizzes) {
   let alternativas = quiz.querySelectorAll('li');
   for (let alternativa of alternativas) {
@@ -14,7 +14,7 @@ for (let quiz of quizzes) {
 
 /* Cria a função de checar as respostas */
 function checador(event) {
-  let alternative = event.target;
+  let alternativa = event.target;
   let quiz = alternativa.closest('.quiz');
   let resultado = quiz.querySelector('.resultado');
   let resposta = quiz.querySelector('.resposta');
@@ -48,7 +48,7 @@ function checador(event) {
   }
   resposta.style.display = 'initial';}
 
-/* Toca os audios */
+/* Toca os audios e começa o contador */
 function playAudio(audioId) {
   return function() {
     document.querySelector(audioId).play();
